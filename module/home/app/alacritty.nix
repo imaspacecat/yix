@@ -13,7 +13,7 @@
       font = {
         normal.family = "JetBrainsMono Nerd Font Mono";
         bold.family = "JetBrainsMono Nerd Font Mono";
-        size = 12.0;
+        size = 8.0;
       };
 
       colors = {

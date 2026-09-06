@@ -16,6 +16,9 @@
           ms-python.vscode-pylance
           ms-python.python
           ms-python.debugpy
+          ms-vscode.cpptools
+          ms-vscode.cmake-tools
+          ms-vscode.cpptools-extension-pack
           ritwickdey.liveserver
           mshr-h.veriloghdl
         ])
