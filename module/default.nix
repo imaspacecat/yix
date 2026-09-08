@@ -3,6 +3,7 @@
 {
   imports = [
     ./system/audio.nix
+    ./system/bluetooth.nix
     ./system/libinput.nix
     ./system/network.nix
     ./system/sops.nix
@@ -25,6 +26,7 @@
 
       ./home/desktop/dunst.nix
       ./home/desktop/i3.nix
+      ./home/desktop/monitors.nix
       ./home/desktop/picom.nix
       ./home/desktop/polybar.nix
       ./home/desktop/rofi.nix

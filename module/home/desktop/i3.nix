@@ -146,6 +146,7 @@ in
           "${mod}+t" = "exec alacritty";
           "${mod}+c" = "exec urxvt -name yazi -e yazi";
           "${mod}+d" = "exec rofi -show drun";
+          "${mod}+b" = "exec bluetooth-rofi";
           "${mod}+q" = "kill";
 
           "${mod}+h" = "focus left";

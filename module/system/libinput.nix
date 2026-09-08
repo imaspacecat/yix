@@ -6,7 +6,7 @@
 
     mouse = {
       accelProfile = "flat";
-      accelSpeed = "0.6";
+      accelSpeed = "0.8";
     };
 
     touchpad = {

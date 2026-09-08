@@ -35,6 +35,12 @@
             version = "3.24.1";
             sha256 = "sha256-xZpK6pJNXnxudauzJihEi9VASRXi89+hn7vfF33qRgY=";
           }
+          {
+            name = "pioasm";
+            publisher = "chris-hock";
+            version = "1.0.0";
+            sha256 = "sha256-OPDqDBefXQeRPqk24LoJ+wXsCvGO6bgJThRaeOZi5yY=";
+          }
         ];
 
       userSettings = {

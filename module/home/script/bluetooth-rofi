@@ -1,0 +1,42 @@
+rofi_config="$HOME/.config/rofi/config.rasi"
+
+rofi_menu() {
+  rofi -config "$rofi_config" -dmenu -i -p Bluetooth
+}
+
+select_device() {
+  devices=$1
+
+  if [ -z "$devices" ]; then
+    rofi -config "$rofi_config" -e "No Bluetooth devices found. Put the device in pairing mode and try again."
+    return 1
+  fi
+
+  selected=$(printf '%s\n' "$devices" | rofi_menu)
+  [ -n "$selected" ] || return 1
+
+  printf '%s\n' "$selected" | awk '{ print $2 }'
+}
+
+action=$(printf '%s\n' "Connect paired device" "Pair new device" | rofi_menu)
+
+case "$action" in
+  "Connect paired device")
+    address=$(select_device "$(bluetoothctl devices Paired)") || exit 0
+    bluetoothctl connect "$address"
+    ;;
+  "Pair new device")
+    {
+      printf '%s\n' "scan on"
+      sleep 3
+      printf '%s\n' "scan off"
+    } | bluetoothctl >/dev/null 2>&1
+    if address=$(select_device "$(bluetoothctl devices)"); then
+      result=0
+    else
+      result=$?
+    fi
+    [ "$result" -eq 0 ] || exit 0
+    bluetoothctl pair "$address" && bluetoothctl trust "$address" && bluetoothctl connect "$address"
+    ;;
+esac
