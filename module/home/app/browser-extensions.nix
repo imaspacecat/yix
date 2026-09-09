@@ -48,6 +48,11 @@ let
         "https://zoom.us"
         "https://*.zoom.us"
       ];
+      ScreenShare.Allow = [
+        "https://meet.google.com"
+        "https://zoom.us"
+        "https://*.zoom.us"
+      ];
     };
   };
 in
