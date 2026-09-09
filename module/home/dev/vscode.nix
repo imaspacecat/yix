@@ -21,6 +21,7 @@
           ms-vscode.cpptools-extension-pack
           ritwickdey.liveserver
           mshr-h.veriloghdl
+          tamasfe.even-better-toml
         ])
         ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {

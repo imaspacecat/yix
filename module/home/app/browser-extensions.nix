@@ -37,6 +37,18 @@ let
   browserPolicies = {
     ExtensionSettings = extensionSettings;
     "3rdparty".Extensions."${autoTabDiscardId}" = autoTabDiscardSettings;
+    Permissions = {
+      Camera.Allow = [
+        "https://meet.google.com"
+        "https://zoom.us"
+        "https://*.zoom.us"
+      ];
+      Microphone.Allow = [
+        "https://meet.google.com"
+        "https://zoom.us"
+        "https://*.zoom.us"
+      ];
+    };
   };
 in
 {
