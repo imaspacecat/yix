@@ -18,7 +18,7 @@ let
       ${pkgs.findutils}/bin/find "$session_dir" -type f -name '*.jsonl' -printf '%T@ %p\n' 2>/dev/null \
         | ${pkgs.coreutils}/bin/sort -nr \
         | ${pkgs.coreutils}/bin/cut -d' ' -f2- \
-        | ${pkgs.coreutils}/bin/head -n1
+        | ${pkgs.gnused}/bin/sed -n '1p'
     )
 
     if [ -z "$session_file" ]; then
@@ -137,7 +137,7 @@ in
       };
 
       "module/pulseaudio" = {
-        type = "internal/alsa";
+        type = "internal/pulseaudio";
         format-volume = "󰕾 <label-volume>";
         label-volume = "%percentage%%";
         label-muted = "󰖁 muted";
@@ -157,12 +157,23 @@ in
         battery = "BAT0";
         adapter = "AC";
         poll-interval = 5;
-        format-charging = "󰂄 <label-charging>";
-        format-discharging = "󰁹 <label-discharging>";
+        format-charging = "<ramp-capacity> <label-charging>";
+        format-discharging = "<ramp-capacity> <label-discharging>";
         format-full = "󰁹 <label-full>";
         label-charging = "%percentage%%";
         label-discharging = "%percentage%%";
         label-full = "100%";
+        ramp-capacity-0 = "󰂎";
+        ramp-capacity-1 = "󰁺";
+        ramp-capacity-2 = "󰁻";
+        ramp-capacity-3 = "󰁼";
+        ramp-capacity-4 = "󰁽";
+        ramp-capacity-5 = "󰁾";
+        ramp-capacity-6 = "󰁿";
+        ramp-capacity-7 = "󰂀";
+        ramp-capacity-8 = "󰂁";
+        ramp-capacity-9 = "󰂂";
+        ramp-capacity-10 = "󰁹";
       };
 
       "module/codexbar" = {

@@ -5,6 +5,8 @@
     ocaml
     dune
     opam
+    rlwrap
     ocamlPackages.findlib
+    ocamlPackages.utop
   ];
 }

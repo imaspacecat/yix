@@ -1,9 +1,18 @@
 { pkgs, ... }:
 
+let
+  python = pkgs.python312.withPackages (
+    pythonPackages: with pythonPackages; [
+      ipykernel
+      jupyter
+    ]
+  );
+in
+
 {
   home.packages = with pkgs; [
     uv
-    python312
+    python
     ruff
     libnotify
   ];

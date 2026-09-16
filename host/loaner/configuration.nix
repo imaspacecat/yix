@@ -7,6 +7,7 @@
   ];
 
   boot.loader.systemd-boot.enable = true;
+  boot.loader.timeout = 5;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "nixos";
@@ -31,8 +32,9 @@
   services.xserver.windowManager.i3.enable = true;
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.xkb = {
-    layout = "us";
+    layout = "us,il";
     variant = "";
+    options = "grp:alt_shift_toggle";
   };
 
   nixpkgs.config.allowUnfree = true;

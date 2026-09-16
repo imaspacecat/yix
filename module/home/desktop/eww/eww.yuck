@@ -1,0 +1,71 @@
+(deflisten workspaces :initial "[]" "@workspaceIconBar@")
+(defpoll backlight :interval "2s" "@backlightBar@")
+(defpoll volume :interval "2s" "@volumeBar@")
+(defpoll wlan :interval "5s" "@wlanBar@")
+(defpoll battery :interval "5s" "@batteryBar@")
+(defpoll codex :interval "10s" "@codexbar@")
+(defpoll date :interval "1s" "date '+%Y-%m-%d %H:%M:%S'")
+
+(defwidget workspace [workspace]
+  (button :class {workspace.focused ? "workspace active" : workspace.urgent ? "workspace urgent" : "workspace"}
+          :onclick "i3-msg workspace ${workspace.num}"
+          :tooltip "Workspace ${workspace.name}"
+    (box :class "workspace-content"
+         :orientation "h"
+         :space-evenly false
+         :spacing 6
+      (label :text "${workspace.num}")
+      (for window in {workspace.windows}
+        (image :icon "${window.icon}"
+               :icon-size "button"
+               :image-width 16
+               :image-height 16
+               :tooltip "${window.class}")))))
+
+(defwidget workspace-list []
+  (box :class "workspaces"
+       :orientation "h"
+       :space-evenly false
+       :halign "start"
+       :spacing 4
+    (for workspace in workspaces
+      (workspace :workspace workspace))))
+
+(defwidget metric [icon value]
+  (box :class "metric"
+       :orientation "h"
+       :space-evenly false
+       :spacing 6
+    (label :class "metric-icon" :text icon)
+    (label :text value)))
+
+(defwidget status []
+  (box :class "status"
+       :orientation "h"
+       :space-evenly false
+       :halign "end"
+       :spacing 8
+    (metric :icon "󰍛" :value "${round(EWW_CPU.avg, 0)}%")
+    (metric :icon "󰘚" :value "${round(EWW_RAM.used_mem_perc, 0)}%")
+    (metric :icon "󰃠" :value backlight)
+    (label :class "metric" :text volume)
+    (label :class "metric" :text wlan)
+    (label :class "metric" :text battery)
+    (label :class "codex" :text codex)
+    (label :class "clock" :text date)))
+
+(defwidget bar-content []
+  (centerbox :class "bar"
+             :orientation "h"
+    (workspace-list)
+    (box)
+    (status)))
+
+(defwindow bar
+  :monitor "<primary>"
+  :geometry (geometry :x "0%" :y "0%" :width "100%" :height "28px" :anchor "top center")
+  :stacking "fg"
+  :windowtype "dock"
+  :reserve (struts :side "top" :distance "28px")
+  :focusable false
+  (bar-content))

@@ -132,7 +132,7 @@ in
           notification = false;
         }
         {
-          command = "systemctl --user restart polybar.service";
+          command = "systemctl --user restart eww.service";
           always = true;
           notification = false;
         }

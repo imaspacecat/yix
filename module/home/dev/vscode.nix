@@ -16,9 +16,12 @@
           ms-python.vscode-pylance
           ms-python.python
           ms-python.debugpy
+          ms-toolsai.jupyter
           ms-vscode.cpptools
           ms-vscode.cmake-tools
           ms-vscode.cpptools-extension-pack
+          ms-vscode-remote.remote-ssh
+          ms-vscode-remote.remote-ssh-edit
           ritwickdey.liveserver
           mshr-h.veriloghdl
           tamasfe.even-better-toml
@@ -47,8 +50,22 @@
       userSettings = {
         "editor.fontFamily" = "'JetBrainsMono Nerd Font', monospace";
         "editor.fontLigatures" = true;
+        "window.zoomLevel" = 1;
         "nix.formatterPath" = "${pkgs.nixfmt}/bin/nixfmt";
         "editor.formatOnSave" = true;
+        "remote.SSH.path" = "${pkgs.openssh}/bin/ssh";
+        "remote.SSH.defaultExtensions" = [
+          "jnoortheen.nix-ide"
+          "ms-python.vscode-pylance"
+          "ms-python.python"
+          "ms-python.debugpy"
+          "ms-toolsai.jupyter"
+          "ms-vscode.cpptools"
+          "ms-vscode.cmake-tools"
+          "mshr-h.veriloghdl"
+          "tamasfe.even-better-toml"
+          "chris-hock.pioasm"
+        ];
         "[nix]" = {
           "editor.defaultFormatter" = "jnoortheen.nix-ide";
         };

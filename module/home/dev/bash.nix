@@ -23,6 +23,7 @@ in
       screenshot = "maim -s | xclip -selection clipboard -t image/png";
       fv = "vim \$(fzf)";
       cb = "xclip -sel clipboard";
+      ocaml = "utop";
     };
   };
 }

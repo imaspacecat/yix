@@ -1,0 +1,67 @@
+* {
+  all: unset;
+  color: #ffffff;
+  font-family: "JetBrainsMono Nerd Font", sans-serif;
+  font-size: 12px;
+}
+
+.bar {
+  background-color: rgba(34, 34, 34, 0.90);
+  border-bottom: 1px solid #444444;
+  min-height: 28px;
+}
+
+.workspaces {
+  margin-left: 5px;
+}
+
+.workspace {
+  background-color: transparent;
+  border-radius: 4px;
+  margin: 3px 0;
+  padding: 0 9px;
+}
+
+.workspace:hover {
+  background-color: #333333;
+}
+
+.workspace.active {
+  background-color: #444444;
+  border-bottom: 2px solid #ffffff;
+  color: #ffffff;
+}
+
+.workspace.urgent {
+  background-color: #444444;
+  border-bottom: 2px solid #ffffff;
+  color: #ffffff;
+}
+
+.workspace image {
+  min-width: 16px;
+  min-height: 16px;
+}
+
+.metric,
+.codex,
+.clock {
+  background-color: transparent;
+  padding: 0 6px;
+}
+
+.metric-icon {
+  color: #ffffff;
+}
+
+.codex {
+  color: #ffffff;
+}
+
+.clock {
+  color: #ffffff;
+}
+
+.status {
+  margin-right: 5px;
+}
