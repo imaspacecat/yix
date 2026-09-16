@@ -1,9 +1,10 @@
 (deflisten workspaces :initial "[]" "@workspaceIconBar@")
-(defpoll backlight :interval "2s" "@backlightBar@")
-(defpoll volume :interval "2s" "@volumeBar@")
+(deflisten backlight :initial "0" "@backlightBar@")
+(deflisten volume :initial '{"icon":"󰕾","percent":0,"muted":false}' "@volumeBar@")
 (defpoll wlan :interval "5s" "@wlanBar@")
+(defpoll wifi_networks :interval "8s" :initial '{"enabled":false,"connected":"","networks":[]}' "@wifiNetworks@")
 (defpoll battery :interval "5s" "@batteryBar@")
-(defpoll codex :interval "10s" "@codexbar@")
+(defpoll codex :interval "10s" :initial '{"context":0,"tokens":"--","five_hour":0,"seven_day":0}' "@codexbar@")
 (defpoll date :interval "1s" "date '+%Y-%m-%d %H:%M:%S'")
 
 (defwidget workspace [workspace]
@@ -16,8 +17,7 @@
          :spacing 6
       (label :text "${workspace.num}")
       (for window in {workspace.windows}
-        (image :icon "${window.icon}"
-               :icon-size "button"
+        (image :path "${window.icon_path}"
                :image-width 16
                :image-height 16
                :tooltip "${window.class}")))))
@@ -39,20 +39,117 @@
     (label :class "metric-icon" :text icon)
     (label :text value)))
 
+(defwidget usage-meter [name value]
+  (box :class "usage-meter"
+       :orientation "h"
+       :space-evenly false
+       :valign "center"
+       :spacing 4
+    (label :class "usage-name" :text name :valign "center")
+    (progress :value value :orientation "h" :valign "center")
+    (label :class "usage-value" :text "${round(value, 0)}%" :valign "center")))
+
+(defwidget status-item [tooltip ?onclick ?onscroll]
+  (button :class "status-item"
+          :tooltip tooltip
+          :onclick onclick
+    (eventbox :cursor {(onclick != "" || onscroll != "") ? "pointer" : "default"}
+              :onscroll onscroll
+      (children))))
+
 (defwidget status []
   (box :class "status"
        :orientation "h"
        :space-evenly false
        :halign "end"
        :spacing 8
-    (metric :icon "󰍛" :value "${round(EWW_CPU.avg, 0)}%")
-    (metric :icon "󰘚" :value "${round(EWW_RAM.used_mem_perc, 0)}%")
-    (metric :icon "󰃠" :value backlight)
-    (label :class "metric" :text volume)
-    (label :class "metric" :text wlan)
-    (label :class "metric" :text battery)
-    (label :class "codex" :text codex)
-    (label :class "clock" :text date)))
+    (box :class "tray"
+         :orientation "h"
+         :space-evenly false
+      (systray :orientation "h"
+               :space-evenly false
+               :spacing 6
+               :icon-size 16
+               :prepend-new false))
+    (status-item :tooltip "CPU usage"
+      (metric :icon "󰍛" :value "${round(EWW_CPU.avg, 0)}%"))
+    (status-item :tooltip "Memory usage"
+      (metric :icon "󰘚" :value "${round(EWW_RAM.used_mem_perc, 0)}%"))
+    (status-item :tooltip "Display brightness · scroll to adjust"
+                 :onscroll "@brightnessAction@ {}"
+      (metric :icon "󰃠" :value "${backlight}%"))
+    (status-item :tooltip "Volume · click to mute · scroll to adjust"
+                 :onclick "@volumeAction@ toggle"
+                 :onscroll "@volumeAction@ {}"
+      (label :class "metric" :text {volume.muted ? "${volume.icon} muted" : "${volume.icon} ${volume.percent}%"}))
+    (status-item :tooltip "Wi-Fi · click to manage connections"
+                 :onclick "@wifiToggle@"
+      (label :class "metric" :text wlan))
+    (status-item :tooltip "Battery level and charging state"
+      (label :class "metric" :text battery))
+    (status-item :tooltip "Codex context: ${codex.tokens} tokens"
+      (box :class "codex-usage"
+           :orientation "h"
+           :space-evenly false
+           :valign "center"
+           :spacing 8
+        (usage-meter :name "CTX" :value {codex.context})
+        (usage-meter :name "5h" :value {codex.five_hour})
+        (usage-meter :name "7d" :value {codex.seven_day})))
+    (status-item :tooltip "Local date and time"
+      (label :class "clock" :text date))))
+
+(defwidget wifi-network [network]
+  (button :class {network.connected ? "wifi-network connected" : "wifi-network"}
+          :onclick "@wifiAction@ connect ${network.id}"
+          :timeout "20s"
+    (box :orientation "h"
+         :space-evenly false
+         :spacing 10
+      (label :class "wifi-signal"
+             :text {network.signal >= 75 ? "󰤨" : network.signal >= 50 ? "󰤥" : network.signal >= 25 ? "󰤢" : "󰤟"})
+      (box :class "wifi-network-name"
+           :orientation "v"
+           :space-evenly false
+           :hexpand true
+        (label :text "${network.ssid}" :xalign 0 :limit-width 24)
+        (label :class "wifi-network-detail"
+               :text {network.connected ? "Connected" : "${network.signal}% signal"}
+               :xalign 0))
+      (label :class "wifi-lock" :text {network.secured ? "󰌾" : ""}))))
+
+(defwidget wifi-panel-content []
+  (box :class "wifi-panel"
+       :orientation "v"
+       :space-evenly false
+       :spacing 10
+    (box :class "wifi-panel-header"
+         :orientation "h"
+         :space-evenly false
+      (label :class "wifi-panel-title" :text "Wi-Fi" :xalign 0 :hexpand true)
+      (button :class {wifi_networks.enabled ? "wifi-radio enabled" : "wifi-radio"}
+              :onclick "@wifiAction@ toggle"
+              :timeout "5s"
+        (label :text {wifi_networks.enabled ? "󰖩 On" : "󰖪 Off"})))
+    (label :class "wifi-current"
+           :text {wifi_networks.connected != "" ? "Connected to ${wifi_networks.connected}" : "Not connected"}
+           :xalign 0)
+    (box :class "wifi-panel-actions"
+         :orientation "h"
+         :space-evenly true
+         :spacing 8
+      (button :onclick "@wifiAction@ rescan" :timeout "10s" "󰑓 Rescan")
+      (button :onclick "@wifiAction@ disconnect" :timeout "10s" "󰖪 Disconnect"))
+    (scroll :class "wifi-scroll" :vscroll true :hscroll false
+      (box :class "wifi-list"
+           :orientation "v"
+           :space-evenly false
+           :spacing 4
+        (for network in {wifi_networks.networks}
+          (wifi-network :network network))))
+    (button :class "wifi-settings"
+            :onclick "@wifiAction@ settings"
+      "󰒓 Advanced network settings")))
 
 (defwidget bar-content []
   (centerbox :class "bar"
@@ -69,3 +166,11 @@
   :reserve (struts :side "top" :distance "28px")
   :focusable false
   (bar-content))
+
+(defwindow wifi-panel
+  :monitor "<primary>"
+  :geometry (geometry :x "-12px" :y "33px" :width "340px" :height "430px" :anchor "top right")
+  :stacking "fg"
+  :windowtype "dialog"
+  :wm-ignore true
+  (wifi-panel-content))

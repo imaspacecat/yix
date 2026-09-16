@@ -47,7 +47,16 @@
 .codex,
 .clock {
   background-color: transparent;
+}
+
+.status-item {
+  border-radius: 4px;
   padding: 0 6px;
+}
+
+.status button.status-item:hover {
+  background-color: #444444;
+  box-shadow: inset 0 -2px #ffffff;
 }
 
 .metric-icon {
@@ -58,10 +67,123 @@
   color: #ffffff;
 }
 
+.codex-usage {
+  background-color: #2d2d2d;
+  border-radius: 4px;
+  padding: 2px 7px;
+}
+
+.usage-name {
+  color: #d0d0d0;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.usage-value {
+  font-size: 12px;
+  min-width: 31px;
+}
+
+.usage-meter progressbar trough {
+  background-color: #444444;
+  border-radius: 4px;
+  min-height: 7px;
+  min-width: 46px;
+}
+
+.usage-meter progressbar trough progress {
+  background-color: #ffffff;
+  border-radius: 4px;
+  min-height: 7px;
+}
+
 .clock {
   color: #ffffff;
 }
 
 .status {
   margin-right: 5px;
+}
+
+.tray {
+  padding: 0 4px;
+}
+
+.tray menu {
+  background-color: #222222;
+  border: 1px solid #444444;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.tray menuitem {
+  border-radius: 3px;
+  padding: 5px 10px;
+}
+
+.tray menuitem:hover {
+  background-color: #444444;
+}
+
+.wifi-panel {
+  background-color: rgba(34, 34, 34, 0.98);
+  border: 1px solid #444444;
+  border-radius: 7px;
+  padding: 12px;
+}
+
+.wifi-panel-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.wifi-radio,
+.wifi-panel-actions button,
+.wifi-settings {
+  background-color: #333333;
+  border-radius: 4px;
+  padding: 6px 10px;
+}
+
+.wifi-radio.enabled {
+  background-color: #444444;
+  box-shadow: inset 0 -2px #ffffff;
+}
+
+.wifi-radio:hover,
+.wifi-panel-actions button:hover,
+.wifi-settings:hover {
+  background-color: #555555;
+}
+
+.wifi-current,
+.wifi-network-detail {
+  color: #b8b8b8;
+}
+
+.wifi-scroll {
+  min-height: 285px;
+}
+
+.wifi-network {
+  border-radius: 4px;
+  padding: 7px 9px;
+}
+
+.wifi-network:hover {
+  background-color: #333333;
+}
+
+.wifi-network.connected {
+  background-color: #444444;
+  box-shadow: inset 2px 0 #ffffff;
+}
+
+.wifi-signal,
+.wifi-lock {
+  min-width: 16px;
+}
+
+.wifi-settings {
+  margin-top: 2px;
 }
