@@ -1,0 +1,17 @@
+(defwidget workspace [workspace]
+  (button :class {workspace.focused ? "workspace active" : workspace.urgent ? "workspace urgent" : "workspace"}
+          :onclick "i3-msg -q 'workspace number ${workspace.num}'"
+          :tooltip "Workspace ${workspace.name}"
+    (box :class "workspace-content"
+         :orientation "h"
+         :space-evenly false
+      (label :text "${workspace.num}"))))
+
+(defwidget workspace-list []
+  (box :class "workspaces"
+       :orientation "h"
+       :space-evenly false
+       :halign "start"
+       :spacing 4
+    (for workspace in workspaces
+      (workspace :workspace workspace))))

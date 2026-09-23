@@ -8,6 +8,7 @@
     ./system/bluetooth.nix
     ./system/libinput.nix
     ./system/network.nix
+    ./system/printing.nix
     ./system/sops.nix
     ./system/user.nix
     ./system/udev.nix

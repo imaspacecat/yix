@@ -1,0 +1,51 @@
+(defwidget wifi-network [network]
+  (button :class {network.connected ? "wifi-network connected" : "wifi-network"}
+          :onclick {network.connected ? "" : "@wifiAction@ connect ${network.id} ${network.security_id}"}
+          :timeout "20s"
+    (box :orientation "h"
+         :space-evenly false
+         :spacing 10
+      (label :class "wifi-signal"
+             :text {network.connected ? "󰄬" : network.signal >= 75 ? "󰤨" : network.signal >= 50 ? "󰤥" : network.signal >= 25 ? "󰤢" : "󰤟"})
+      (box :class "wifi-network-name"
+           :orientation "v"
+           :space-evenly false
+           :hexpand true
+        (label :text "${network.ssid}" :xalign 0 :limit-width 24)
+        (label :class "wifi-network-detail"
+               :text {network.connected ? "Connected · ${network.signal}% signal" : "${network.signal}% signal"}
+               :xalign 0))
+      (label :class "wifi-lock" :text {network.secured ? "󰌾" : ""}))))
+
+(defwidget wifi-panel-content []
+  (box :class "wifi-panel"
+       :orientation "v"
+       :space-evenly false
+       :spacing 10
+    (box :class "wifi-panel-header"
+         :orientation "h"
+         :space-evenly false
+      (label :class "wifi-panel-title" :text "Wi-Fi" :xalign 0 :hexpand true)
+      (button :class {wifi_networks.enabled ? "wifi-radio enabled" : "wifi-radio"}
+              :onclick "@wifiAction@ toggle"
+              :timeout "5s"
+        (label :text {wifi_networks.enabled ? "󰖩 On" : "󰖪 Off"})))
+    (label :class "wifi-current"
+           :text {wifi_networks.connected != "" ? "Connected to ${wifi_networks.connected}" : "Not connected"}
+           :xalign 0)
+    (box :class "wifi-panel-actions"
+         :orientation "h"
+         :space-evenly true
+         :spacing 8
+      (button :onclick "@wifiAction@ rescan" :timeout "10s" "󰑓 Rescan")
+      (button :onclick "@wifiAction@ disconnect" :timeout "10s" "󰖪 Disconnect"))
+    (scroll :class "wifi-scroll" :vscroll true :hscroll false
+      (box :class "wifi-list"
+           :orientation "v"
+           :space-evenly false
+           :spacing 4
+        (for network in {wifi_networks.networks}
+          (wifi-network :network network))))
+    (button :class "wifi-settings"
+            :onclick "@wifiAction@ settings"
+      "󰒓 Advanced network settings")))

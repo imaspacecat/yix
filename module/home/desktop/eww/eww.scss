@@ -2,7 +2,7 @@
   all: unset;
   color: #ffffff;
   font-family: "JetBrainsMono Nerd Font", sans-serif;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .bar {
@@ -38,11 +38,6 @@
   color: #ffffff;
 }
 
-.workspace image {
-  min-width: 16px;
-  min-height: 16px;
-}
-
 .metric,
 .codex,
 .clock {
@@ -75,12 +70,12 @@
 
 .usage-name {
   color: #d0d0d0;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: bold;
 }
 
 .usage-value {
-  font-size: 12px;
+  font-size: 13px;
   min-width: 31px;
 }
 
@@ -123,6 +118,10 @@
 
 .tray menuitem:hover {
   background-color: #444444;
+}
+
+.panel-backdrop {
+  background-color: transparent;
 }
 
 .wifi-panel {
@@ -175,8 +174,13 @@
 }
 
 .wifi-network.connected {
-  background-color: #444444;
-  box-shadow: inset 2px 0 #ffffff;
+  background-color: #3f4f46;
+  box-shadow: inset 3px 0 #9fe3b2;
+}
+
+.wifi-network.connected .wifi-signal,
+.wifi-network.connected .wifi-network-name {
+  color: #b7f5c8;
 }
 
 .wifi-signal,
@@ -186,4 +190,57 @@
 
 .wifi-settings {
   margin-top: 2px;
+}
+
+.ram-panel {
+  background-color: rgba(34, 34, 34, 0.98);
+  border: 1px solid #444444;
+  border-radius: 7px;
+  padding: 12px;
+}
+
+.ram-panel-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.ram-process-header {
+  color: #b8b8b8;
+  font-weight: bold;
+  padding: 0 8px 4px;
+}
+
+.ram-process {
+  background-color: #2d2d2d;
+  border-radius: 4px;
+}
+
+.ram-process-heat {
+  border-radius: 4px;
+  min-height: 31px;
+}
+
+.ram-process-heat.hot {
+  background-color: rgba(220, 85, 85, 0.5);
+}
+
+.ram-process-heat.warm {
+  background-color: rgba(218, 151, 64, 0.42);
+}
+
+.ram-process-heat.cool {
+  background-color: rgba(83, 166, 155, 0.34);
+}
+
+.ram-process-content {
+  padding: 6px 8px;
+}
+
+.ram-process-pid {
+  color: #b8b8b8;
+  min-width: 48px;
+}
+
+.ram-process-memory {
+  min-width: 72px;
 }

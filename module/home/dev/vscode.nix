@@ -45,11 +45,24 @@
             version = "1.0.0";
             sha256 = "sha256-OPDqDBefXQeRPqk24LoJ+wXsCvGO6bgJThRaeOZi5yY=";
           }
+          {
+            name = "yash";
+            publisher = "daohong-emilio";
+            version = "0.3.1";
+            sha256 = "sha256-DentLM/XT7b7O4vptVcja9E8pQjiDPOLilo8wjTH0IE=";
+          }
+          {
+            name = "cool-language-support";
+            publisher = "Linhan";
+            version = "0.2.0";
+            sha256 = "sha256-5AS5BkFf6Lqv3h1KE3OYrPt6sZajqs6P//W6OFywTn4=";
+          }
         ];
 
       userSettings = {
         "editor.fontFamily" = "'JetBrainsMono Nerd Font', monospace";
         "editor.fontLigatures" = true;
+        "editor.mouseWheelScrollSensitivity" = 2;
         "window.zoomLevel" = 1;
         "nix.formatterPath" = "${pkgs.nixfmt}/bin/nixfmt";
         "editor.formatOnSave" = true;
@@ -65,6 +78,8 @@
           "mshr-h.veriloghdl"
           "tamasfe.even-better-toml"
           "chris-hock.pioasm"
+          "daohong-emilio.yash"
+          "Linhan.cool-language-support"
         ];
         "[nix]" = {
           "editor.defaultFormatter" = "jnoortheen.nix-ide";

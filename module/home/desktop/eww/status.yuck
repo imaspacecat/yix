@@ -1,0 +1,97 @@
+(defwidget metric [icon value]
+  (box :class "metric"
+       :orientation "h"
+       :space-evenly false
+       :spacing 6
+    (label :class "metric-icon" :text icon)
+    (label :text value)))
+
+(defwidget usage-meter [name value]
+  (box :class "usage-meter"
+       :orientation "h"
+       :space-evenly false
+       :valign "center"
+       :spacing 4
+    (label :class "usage-name" :text name :valign "center")
+    (progress :value value :orientation "h" :valign "center")
+    (label :class "usage-value" :text "${round(value, 0)}%" :valign "center")))
+
+(defwidget status-item [tooltip ?onclick ?onscroll]
+  (button :class "status-item"
+          :tooltip tooltip
+          :onclick onclick
+    (eventbox :cursor {(onclick != "" || onscroll != "") ? "pointer" : "default"}
+              :onscroll onscroll
+      (children))))
+
+(defwidget ram-process [process]
+  (overlay :class "ram-process"
+    (box :class {process.heat >= 75 ? "ram-process-heat hot" : process.heat >= 40 ? "ram-process-heat warm" : "ram-process-heat cool"}
+         :width {round(process.heat * 3.2, 0)}
+         :halign "start")
+    (box :class "ram-process-content"
+         :orientation "h"
+         :space-evenly false
+         :spacing 8
+      (label :class "ram-process-name" :text "${process.name}" :xalign 0 :hexpand true :limit-width 22)
+      (label :class "ram-process-pid" :text "${process.pid}")
+      (label :class "ram-process-memory" :text "${process.mib} MiB"))))
+
+(defwidget ram-panel-content []
+  (box :class "ram-panel"
+       :orientation "v"
+       :space-evenly false
+       :spacing 8
+    (label :class "ram-panel-title" :text "Memory by process" :xalign 0)
+    (box :class "ram-process-header"
+         :orientation "h"
+         :space-evenly false
+         :spacing 8
+      (label :text "Process" :xalign 0 :hexpand true)
+      (label :text "PID")
+      (label :text "Memory"))
+    (for process in ram_processes
+      (ram-process :process process))))
+
+(defwidget status []
+  (box :class "status"
+       :orientation "h"
+       :space-evenly false
+       :halign "end"
+       :spacing 8
+    (box :class "tray"
+         :orientation "h"
+         :space-evenly false
+      (systray :orientation "h"
+               :space-evenly false
+               :spacing 6
+               :icon-size 16
+               :prepend-new false))
+    (status-item :tooltip "CPU usage"
+      (metric :icon "󰍛" :value "${round(EWW_CPU.avg, 0)}%"))
+    (status-item :tooltip "Memory usage · click for processes"
+                 :onclick "@ramToggle@"
+      (metric :icon "󰘚" :value "${round(EWW_RAM.used_mem_perc, 0)}%"))
+    (status-item :tooltip "Display brightness · scroll to adjust"
+                 :onscroll "@brightnessAction@ {}"
+      (metric :icon "󰃠" :value "${backlight}%"))
+    (status-item :tooltip "Volume · click to mute · scroll to adjust"
+                 :onclick "@volumeAction@ toggle"
+                 :onscroll "@volumeAction@ {}"
+      (label :class "metric" :text {volume.muted ? "${volume.icon} muted" : "${volume.icon} ${volume.percent}%"}))
+    (status-item :tooltip "Wi-Fi · click to manage connections"
+                 :onclick "@wifiToggle@"
+      (label :class "metric" :text wlan))
+    (status-item :tooltip "Battery level and charging state"
+      (label :class "metric" :text battery))
+    (status-item :tooltip "Codex context: ${codex.tokens} tokens"
+      (box :class "codex-usage"
+           :orientation "h"
+           :space-evenly false
+           :valign "center"
+           :spacing 8
+        (usage-meter :name "CTX" :value {codex.context})
+        (usage-meter :name "5h" :value {codex.five_hour})
+        (usage-meter :name "7d" :value {codex.seven_day})))
+    (status-item :tooltip "Local date and time"
+      (label :class "clock" :text date))))

@@ -16,6 +16,7 @@
     fd
     file
     feh
+    gimp
     discord-ptb
     usbutils
   ];
