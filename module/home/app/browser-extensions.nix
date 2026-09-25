@@ -37,6 +37,11 @@ let
   browserPolicies = {
     ExtensionSettings = extensionSettings;
     "3rdparty".Extensions."${autoTabDiscardId}" = autoTabDiscardSettings;
+    "3rdparty".Extensions."uBlock0@raymondhill.net" = {
+      toOverwrite.filters = [
+        "||amazon.*^$removeparam=/^(?:__mk_[a-z]{1,3}_[a-z]{1,3}|_encoding|aaxitk|ascsubtag|camp|content-id|creative|creativeASIN|crid|cv_ct_[a-z]+|dib|dib_tag|dchild|field-lbr_brands_browse-bin|hsa_cr_id|keywords|linkCode|ms3_c|p[fd]_rd_[a-z]+|qid|qualifier|ref_?|refRID|s|sb-ci-[a-z]+|smid|spIA|sprefix|sr|srs|starsLeft|th)=/"
+      ];
+    };
     Permissions = {
       Camera.Allow = [
         "https://meet.google.com"

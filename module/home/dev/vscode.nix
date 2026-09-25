@@ -64,6 +64,8 @@
         "editor.fontLigatures" = true;
         "editor.mouseWheelScrollSensitivity" = 2;
         "window.zoomLevel" = 1;
+        "notebook.diff.ignoreMetadata" = true;
+        "notebook.diff.ignoreOutputs" = true;
         "nix.formatterPath" = "${pkgs.nixfmt}/bin/nixfmt";
         "editor.formatOnSave" = true;
         "remote.SSH.path" = "${pkgs.openssh}/bin/ssh";
