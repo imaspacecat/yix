@@ -7,8 +7,16 @@
   ];
 
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.graceful = true;
   boot.loader.timeout = 5;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 16 * 1024;
+    }
+  ];
 
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;

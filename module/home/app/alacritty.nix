@@ -18,19 +18,19 @@
 
       colors = {
         primary = {
-          background = "#222222";
-          foreground = "#ffffff";
+          background = "#101014";
+          foreground = "#d8d8de";
         };
         cursor = {
-          cursor = "#ffffff";
-          text = "#222222";
+          cursor = "#d8d8de";
+          text = "#101014";
         };
         selection = {
-          background = "#444444";
-          text = "#ffffff";
+          background = "#303039";
+          text = "#d8d8de";
         };
         normal = {
-          black = "#222222";
+          black = "#101014";
           red = "#d16969";
           green = "#98c379";
           yellow = "#d7ba7d";
@@ -40,14 +40,14 @@
           white = "#dcdfe4";
         };
         bright = {
-          black = "#444444";
+          black = "#303039";
           red = "#e06c75";
           green = "#a6e3a1";
           yellow = "#f9e2af";
           blue = "#89b4fa";
           magenta = "#f5c2e7";
           cyan = "#94e2d5";
-          white = "#ffffff";
+          white = "#d8d8de";
         };
       };
     };

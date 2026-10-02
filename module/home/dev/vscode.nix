@@ -60,6 +60,7 @@
         ];
 
       userSettings = {
+        "chat.disableAIFeatures" = true;
         "editor.fontFamily" = "'JetBrainsMono Nerd Font', monospace";
         "editor.fontLigatures" = true;
         "editor.mouseWheelScrollSensitivity" = 2;

@@ -5,7 +5,6 @@
   home.homeDirectory = "/home/spacecat";
   home.packages = with pkgs; [
     fastfetch
-    btop
     xclip
     maim
     jq
@@ -20,6 +19,11 @@
     discord-ptb
     usbutils
   ];
+
+  programs.btop = {
+    enable = true;
+    settings.proc_tree = true;
+  };
 
   home.stateVersion = "26.05";
 }
