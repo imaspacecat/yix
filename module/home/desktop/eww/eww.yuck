@@ -1,16 +1,12 @@
 (deflisten workspaces :initial "[]" "@workspaceIconBar@")
 (deflisten backlight :initial "0" "@backlightBar@")
 (deflisten volume :initial '{"icon":"󰕾","percent":0,"muted":false}' "@volumeBar@")
-(defpoll wlan :interval "5s" "@wlanBar@")
-(defpoll wifi_networks :interval "8s" :initial '{"enabled":false,"connected":"","networks":[]}' "@wifiNetworks@")
-(defpoll ram_processes :interval "2s" :initial "[]" "@ramProcesses@")
 (defpoll battery :interval "5s" "@batteryBar@")
 (defpoll codex :interval "10s" :initial '{"context":0,"tokens":"--","five_hour":0,"seven_day":0}' "@codexbar@")
 (defpoll date :interval "1s" "date '+%Y-%m-%d %H:%M:%S'")
 
 (include "workspaces.yuck")
 (include "status.yuck")
-(include "wifi.yuck")
 
 (defwidget bar-content []
   (centerbox :class "bar"
@@ -27,27 +23,3 @@
   :reserve (struts :side "top" :distance "28px")
   :focusable false
   (bar-content))
-
-(defwindow panel-backdrop
-  :monitor "<primary>"
-  :geometry (geometry :x "0px" :y "29px" :width "100%" :height "100%" :anchor "top left")
-  :stacking "fg"
-  :windowtype "dialog"
-  :wm-ignore true
-  (button :class "panel-backdrop" :onclick "@panelClose@" :hexpand true :vexpand true ""))
-
-(defwindow wifi-panel [x]
-  :monitor "<primary>"
-  :geometry (geometry :x "${x}px" :y "29px" :width "340px" :height "430px" :anchor "top left")
-  :stacking "fg"
-  :windowtype "dialog"
-  :wm-ignore true
-  (wifi-panel-content))
-
-(defwindow ram-panel [x]
-  :monitor "<primary>"
-  :geometry (geometry :x "${x}px" :y "29px" :width "360px" :height "400px" :anchor "top left")
-  :stacking "fg"
-  :windowtype "dialog"
-  :wm-ignore true
-  (ram-panel-content))

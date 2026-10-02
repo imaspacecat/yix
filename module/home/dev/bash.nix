@@ -18,6 +18,7 @@ in
     enable = true;
     shellAliases = {
       ll = "ls -la";
+      gstat = "printf '\\033[1mStaged changes:\\033[0m\\n'; git diff --staged --stat; printf '\\n\\033[1mUnstaged changes:\\033[0m\\n'; git diff --stat";
       rem = "reminders";
       update = "sudo nixos-rebuild switch --flake .#loaner";
       screenshot = "maim -s | xclip -selection clipboard -t image/png";

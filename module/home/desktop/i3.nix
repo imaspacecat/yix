@@ -1,6 +1,8 @@
 { pkgs, lib, ... }:
 
 let
+  mod = "Mod4";
+
   nextFreeWs = pkgs.writeShellApplication {
     name = "i3-next-free-workspace";
     runtimeInputs = with pkgs; [
@@ -74,7 +76,7 @@ in
     enable = true;
     config = {
       terminal = "alacritty";
-      modifier = "Mod4";
+      modifier = mod;
 
       fonts = {
         names = [ "JetBrainsMono Nerd Font" ];
@@ -138,65 +140,48 @@ in
         }
       ];
 
-      keybindings =
-        let
-          mod = "Mod4";
-        in
-        lib.mkOptionDefault {
-          "${mod}+t" = "exec alacritty";
-          "${mod}+c" = "exec urxvt -name yazi -e yazi";
-          "${mod}+d" = "exec rofi -show drun";
-          "${mod}+b" = "exec bluetooth-rofi";
-          "${mod}+q" = "kill";
+      keybindings = lib.mkOptionDefault {
+        "${mod}+t" = "exec alacritty";
+        "${mod}+c" = "exec urxvt -name yazi -e yazi";
+        "${mod}+d" = "exec rofi -show drun";
+        "${mod}+b" = "exec rofi-bluetooth";
+        "${mod}+q" = "kill";
 
-          "${mod}+h" = "focus left";
-          "${mod}+j" = "focus down";
-          "${mod}+k" = "focus up";
-          "${mod}+l" = "focus right";
+        "${mod}+h" = "focus left";
+        "${mod}+j" = "focus down";
+        "${mod}+k" = "focus up";
+        "${mod}+l" = "focus right";
 
-          "${mod}+Shift+h" = "move left";
-          "${mod}+Shift+j" = "move down";
-          "${mod}+Shift+k" = "move up";
-          "${mod}+Shift+l" = "move right";
+        "${mod}+Shift+h" = "move left";
+        "${mod}+Shift+j" = "move down";
+        "${mod}+Shift+k" = "move up";
+        "${mod}+Shift+l" = "move right";
 
-          "${mod}+x" = "split h";
-          "${mod}+z" = "split v";
-          "${mod}+f" = "fullscreen toggle";
+        "${mod}+x" = "split h";
+        "${mod}+z" = "split v";
 
-          "${mod}+s" = "layout stacking";
-          "${mod}+w" = "layout tabbed";
-          "${mod}+e" = "layout toggle split";
+        "${mod}+Shift+e" = "exec i3-msg exit";
 
-          "${mod}+Shift+space" = "floating toggle";
-          "${mod}+space" = "focus mode_toggle";
+        "${mod}+Shift+s" = "exec maim -s | xclip -selection clipboard -t image/png";
 
-          "${mod}+Shift+c" = "reload";
-          "${mod}+Shift+r" = "restart";
-          "${mod}+Shift+e" = "exec i3-msg exit";
+        "Ctrl+${mod}+Left" = "workspace prev";
+        "Ctrl+${mod}+Right" = "workspace next";
 
-          "${mod}+Shift+s" = "exec maim -s | xclip -selection clipboard -t image/png";
+        "Ctrl+Shift+${mod}+Left" = "exec ${movePrevWs}/bin/i3-move-previous-workspace";
+        "Ctrl+Shift+${mod}+Right" = "exec ${moveNextWs}/bin/i3-move-next-workspace";
 
-          "Ctrl+${mod}+Left" = "workspace prev";
-          "Ctrl+${mod}+Right" = "workspace next";
+        "${mod}+Shift+plus" = "exec ${moveNewWs}/bin/i3-move-new-workspace";
 
-          "Ctrl+Shift+${mod}+Left" = "exec ${movePrevWs}/bin/i3-move-previous-workspace";
-          "Ctrl+Shift+${mod}+Right" = "exec ${moveNextWs}/bin/i3-move-next-workspace";
+        "${mod}+plus" = "exec ${focusNewWs}/bin/i3-focus-new-workspace";
 
-          "${mod}+Shift+minus" = "move scratchpad";
-          "${mod}+minus" = "scratchpad show";
+        "XF86MonBrightnessUp" = "exec brightnessctl set 5%+";
+        "XF86MonBrightnessDown" = "exec brightnessctl set 5%-";
 
-          "${mod}+Shift+plus" = "exec ${moveNewWs}/bin/i3-move-new-workspace";
-
-          "${mod}+plus" = "exec ${focusNewWs}/bin/i3-focus-new-workspace";
-
-          "XF86MonBrightnessUp" = "exec brightnessctl set 5%+";
-          "XF86MonBrightnessDown" = "exec brightnessctl set 5%-";
-
-          "XF86AudioRaiseVolume" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
-          "XF86AudioLowerVolume" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
-          "XF86AudioMute" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
-          "XF86AudioMicMute" = "exec ${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
-        };
+        "XF86AudioRaiseVolume" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
+        "XF86AudioLowerVolume" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
+        "XF86AudioMute" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
+        "XF86AudioMicMute" = "exec ${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
+      };
 
       bars = [ ];
     };

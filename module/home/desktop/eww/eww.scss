@@ -26,20 +26,13 @@
   background-color: #333333;
 }
 
-.workspace.active {
-  background-color: #444444;
-  border-bottom: 2px solid #ffffff;
-  color: #ffffff;
-}
-
+.workspace.active,
 .workspace.urgent {
   background-color: #444444;
   border-bottom: 2px solid #ffffff;
-  color: #ffffff;
 }
 
 .metric,
-.codex,
 .clock {
   background-color: transparent;
 }
@@ -54,14 +47,6 @@
   box-shadow: inset 0 -2px #ffffff;
 }
 
-.metric-icon {
-  color: #ffffff;
-}
-
-.codex {
-  color: #ffffff;
-}
-
 .codex-usage {
   background-color: #2d2d2d;
   border-radius: 4px;
@@ -70,12 +55,10 @@
 
 .usage-name {
   color: #d0d0d0;
-  font-size: 13px;
   font-weight: bold;
 }
 
 .usage-value {
-  font-size: 13px;
   min-width: 31px;
 }
 
@@ -90,10 +73,6 @@
   background-color: #ffffff;
   border-radius: 4px;
   min-height: 7px;
-}
-
-.clock {
-  color: #ffffff;
 }
 
 .status {
@@ -118,129 +97,4 @@
 
 .tray menuitem:hover {
   background-color: #444444;
-}
-
-.panel-backdrop {
-  background-color: transparent;
-}
-
-.wifi-panel {
-  background-color: rgba(34, 34, 34, 0.98);
-  border: 1px solid #444444;
-  border-radius: 7px;
-  padding: 12px;
-}
-
-.wifi-panel-title {
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.wifi-radio,
-.wifi-panel-actions button,
-.wifi-settings {
-  background-color: #333333;
-  border-radius: 4px;
-  padding: 6px 10px;
-}
-
-.wifi-radio.enabled {
-  background-color: #444444;
-  box-shadow: inset 0 -2px #ffffff;
-}
-
-.wifi-radio:hover,
-.wifi-panel-actions button:hover,
-.wifi-settings:hover {
-  background-color: #555555;
-}
-
-.wifi-current,
-.wifi-network-detail {
-  color: #b8b8b8;
-}
-
-.wifi-scroll {
-  min-height: 285px;
-}
-
-.wifi-network {
-  border-radius: 4px;
-  padding: 7px 9px;
-}
-
-.wifi-network:hover {
-  background-color: #333333;
-}
-
-.wifi-network.connected {
-  background-color: #3f4f46;
-  box-shadow: inset 3px 0 #9fe3b2;
-}
-
-.wifi-network.connected .wifi-signal,
-.wifi-network.connected .wifi-network-name {
-  color: #b7f5c8;
-}
-
-.wifi-signal,
-.wifi-lock {
-  min-width: 16px;
-}
-
-.wifi-settings {
-  margin-top: 2px;
-}
-
-.ram-panel {
-  background-color: rgba(34, 34, 34, 0.98);
-  border: 1px solid #444444;
-  border-radius: 7px;
-  padding: 12px;
-}
-
-.ram-panel-title {
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.ram-process-header {
-  color: #b8b8b8;
-  font-weight: bold;
-  padding: 0 8px 4px;
-}
-
-.ram-process {
-  background-color: #2d2d2d;
-  border-radius: 4px;
-}
-
-.ram-process-heat {
-  border-radius: 4px;
-  min-height: 31px;
-}
-
-.ram-process-heat.hot {
-  background-color: rgba(220, 85, 85, 0.5);
-}
-
-.ram-process-heat.warm {
-  background-color: rgba(218, 151, 64, 0.42);
-}
-
-.ram-process-heat.cool {
-  background-color: rgba(83, 166, 155, 0.34);
-}
-
-.ram-process-content {
-  padding: 6px 8px;
-}
-
-.ram-process-pid {
-  color: #b8b8b8;
-  min-width: 48px;
-}
-
-.ram-process-memory {
-  min-width: 72px;
 }

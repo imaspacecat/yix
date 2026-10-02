@@ -13,6 +13,10 @@ let
       install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
       private_browsing = true;
     };
+    "myallychou@gmail.com" = {
+      installation_mode = "force_installed";
+      install_url = "https://addons.mozilla.org/firefox/downloads/latest/youtube-recommended-videos/latest.xpi";
+    };
     "{08ed11c3-efeb-4275-8887-5b1fc9dfc183}" = {
       installation_mode = "force_installed";
       install_url = "https://addons.mozilla.org/firefox/downloads/latest/terrakok-fuzzytabs/latest.xpi";
@@ -47,11 +51,13 @@ let
         "https://meet.google.com"
         "https://zoom.us"
         "https://*.zoom.us"
+        "https://gov.teams.microsoft.us"
       ];
       Microphone.Allow = [
         "https://meet.google.com"
         "https://zoom.us"
         "https://*.zoom.us"
+        "https://gov.teams.microsoft.us"
       ];
       ScreenShare.Allow = [
         "https://meet.google.com"

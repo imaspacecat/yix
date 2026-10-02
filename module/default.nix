@@ -41,6 +41,7 @@
       ./home/dev/git.nix
       ./home/dev/ocaml.nix
       ./home/dev/python.nix
+      ./home/dev/security.nix
       ./home/dev/ssh.nix
       ./home/dev/vscode.nix
       ./home/dev/codex.nix

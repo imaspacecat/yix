@@ -83,16 +83,9 @@ in
     enableBashIntegration = true;
 
     extraPackages = with pkgs; [
-      _7zz
-      chafa
       exiftool
-      ffmpeg
       ffmpegthumbnailer
-      imagemagick
-      poppler
-      resvg
       ueberzugpp
-      zoxide
     ];
 
     settings = {
