@@ -1,0 +1,8 @@
+image=$(mktemp --suffix=.png)
+trap 'rm -f "$image"' EXIT
+dimensions=$(xdpyinfo | awk '/dimensions:/ { print $2 }')
+if magick "$WALLPAPER" -resize "$dimensions" -background black -gravity center -extent "$dimensions" "$image"; then
+  i3lock --color=000000 --image="$image"
+else
+  i3lock --color=000000
+fi

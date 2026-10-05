@@ -2,6 +2,31 @@
 
 let
   mod = "Mod4";
+  wallpaper = "/home/spacecat/Downloads/totoro2.webp";
+
+  lockScreen = pkgs.writeShellApplication {
+    name = "lock-screen";
+    runtimeInputs = with pkgs; [
+      coreutils
+      imagemagick
+      xdpyinfo
+      gawk
+      i3lock
+    ];
+    runtimeEnv.WALLPAPER = wallpaper;
+    text = builtins.readFile ../script/lock-screen;
+  };
+
+  sessionMenu = pkgs.writeShellApplication {
+    name = "session-menu";
+    runtimeInputs = with pkgs; [
+      rofi
+      i3
+      systemd
+      lockScreen
+    ];
+    text = builtins.readFile ../script/session-menu;
+  };
 
   nextFreeWs = pkgs.writeShellApplication {
     name = "i3-next-free-workspace";
@@ -78,6 +103,11 @@ in
       terminal = "alacritty";
       modifier = mod;
 
+      gaps = {
+        inner = 8;
+        outer = 2;
+      };
+
       fonts = {
         names = [ "JetBrainsMono Nerd Font" ];
         size = 10.0;
@@ -129,7 +159,7 @@ in
 
       startup = [
         {
-          command = "feh --bg-max /home/spacecat/Downloads/totoro2.webp";
+          command = "feh --bg-max ${wallpaper}";
           always = true;
           notification = false;
         }
@@ -145,6 +175,7 @@ in
         "${mod}+c" = "exec urxvt -name yazi -e yazi";
         "${mod}+d" = "exec rofi -show drun";
         "${mod}+b" = "exec rofi-bluetooth";
+        "${mod}+Escape" = "exec ${sessionMenu}/bin/session-menu";
         "${mod}+q" = "kill";
 
         "${mod}+h" = "focus left";

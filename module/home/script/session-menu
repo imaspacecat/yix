@@ -1,0 +1,19 @@
+theme='window { width: 320px; padding: 12px; } mainbox { spacing: 8px; } inputbar { padding: 4px; } listview { lines: 5; spacing: 2px; fixed-height: false; } element { padding: 6px; }'
+choice=$(printf '%s\n' '  Lock' '  Suspend' '  Logout' '  Restart' '  Power off' | rofi -dmenu -i -no-custom -p 'Session' -theme-str "$theme") || exit 0
+choice="${choice#*  }"
+case "$choice" in
+  Lock) lock-screen ;;
+  Suspend)
+    lock-screen
+    systemctl suspend
+    ;;
+  Logout|Restart|'Power off')
+    confirmation=$(printf '%s\n' 'Cancel' 'Confirm' | rofi -dmenu -i -no-custom -p "$choice?" -theme-str "$theme listview { lines: 2; }") || exit 0
+    [ "$confirmation" = 'Confirm' ] || exit 0
+    case "$choice" in
+      Logout) i3-msg exit ;;
+      Restart) systemctl reboot ;;
+      'Power off') systemctl poweroff ;;
+    esac
+    ;;
+esac

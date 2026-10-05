@@ -36,6 +36,8 @@
     LC_TIME = "en_US.UTF-8";
   };
 
+  programs.i3lock.enable = true;
+
   services.xserver.enable = true;
   services.xserver.windowManager.i3.enable = true;
   services.xserver.displayManager.lightdm.enable = true;

@@ -6,13 +6,20 @@
 }
 
 .bar {
-  background-color: rgba(34, 34, 34, 0.90);
-  border-bottom: 1px solid #444444;
+  background-color: transparent;
+  opacity: 0.9;
   min-height: 28px;
 }
 
+.workspaces,
+.status {
+  background-color: #222222;
+  border-bottom: 1px solid #444444;
+  border-radius: 8px;
+}
+
 .workspaces {
-  margin-left: 5px;
+  padding-left: 5px;
 }
 
 .workspace {
@@ -76,7 +83,7 @@
 }
 
 .status {
-  margin-right: 5px;
+  padding-right: 5px;
 }
 
 .tray {
