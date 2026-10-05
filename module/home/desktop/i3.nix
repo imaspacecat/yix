@@ -2,7 +2,7 @@
 
 let
   mod = "Mod4";
-  wallpaper = "/home/spacecat/Downloads/totoro2.webp";
+  wallpaper = "/home/spacecat/Downloads/totoro.jpeg";
 
   lockScreen = pkgs.writeShellApplication {
     name = "lock-screen";
@@ -159,7 +159,7 @@ in
 
       startup = [
         {
-          command = "feh --bg-max ${wallpaper}";
+          command = "${pkgs.feh}/bin/feh --bg-fill ${lib.escapeShellArg wallpaper}";
           always = true;
           notification = false;
         }

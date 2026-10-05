@@ -37,12 +37,15 @@
       home-manager,
       ...
     }@inputs:
+    let
+      host = "slim7i";
+    in
     {
       nixosConfigurations = {
-        loaner = nixpkgs.lib.nixosSystem {
+        ${host} = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            ./host/loaner/configuration.nix
+            (./host + "/${host}/configuration.nix")
 
             sops-nix.nixosModules.sops
 
@@ -51,7 +54,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
 
-              home-manager.extraSpecialArgs = { inherit inputs; };
+              home-manager.extraSpecialArgs = { inherit inputs host; };
             }
           ];
         };
