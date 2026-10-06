@@ -1,3 +1,8 @@
-### yix (yOTAM'S NixOS CONFIG)
+### yix 
+(y)otam's n(ix)OS config
 
-initially configured on a UIUC Engineering IT loaner laptop
+#### Hosts:
+
+`loaner`: UIUC Engineering IT loaner laptop (where this config was originally produced)
+
+`slim7i`: my personal device

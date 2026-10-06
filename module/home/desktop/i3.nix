@@ -193,7 +193,8 @@ in
 
         "${mod}+Shift+e" = "exec i3-msg exit";
 
-        "${mod}+Shift+s" = "exec maim -s | xclip -selection clipboard -t image/png";
+        "${mod}+Shift+s" = "exec screenshot";
+        "Ctrl+${mod}+Shift+s" = "exec screenshot --full";
 
         "Ctrl+${mod}+Left" = "workspace prev";
         "Ctrl+${mod}+Right" = "workspace next";

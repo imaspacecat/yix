@@ -39,6 +39,11 @@ let
   };
 
   browserPolicies = {
+    PopupBlocking.Allow = [
+      "https://zoom.us"
+      "https://zoom.com"
+      "https://zoomgov.com"
+    ];
     ExtensionSettings = extensionSettings;
     "3rdparty".Extensions."${autoTabDiscardId}" = autoTabDiscardSettings;
     "3rdparty".Extensions."uBlock0@raymondhill.net" = {
