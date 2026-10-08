@@ -20,9 +20,10 @@
 
       ./home/app/alacritty.nix
       ./home/app/browser-extensions.nix
+      ./home/app/calcure.nix
       #./home/app/firefox.nix
       ./home/app/helium.nix
-      ./home/app/kicad.nix
+      ./home/app/kicad/kicad.nix
       ./home/app/obsidian.nix
       ./home/app/urxvt.nix
       ./home/app/zen.nix

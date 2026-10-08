@@ -4,6 +4,7 @@ let
   ewwPackages = import ./eww/packages.nix { inherit pkgs; };
   ewwCommands = lib.mapAttrs (_: lib.getExe) ewwPackages // {
     processMonitor = "${pkgs.rxvt-unicode}/bin/urxvt -e ${pkgs.btop}/bin/btop >/dev/null 2>&1 &";
+    calendar = "${pkgs.rxvt-unicode}/bin/urxvt -name calcure -title Calcure -geometry 120x36 -b 16 -e ${pkgs.calcure}/bin/calcure >/dev/null 2>&1 &";
   };
 
   replaceEww =

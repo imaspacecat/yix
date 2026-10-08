@@ -40,9 +40,11 @@ in
   programs.bash = {
     enable = true;
     shellAliases = {
+      shell = "nix-shell";
       ll = "ls -la";
       gstat = "printf '\\033[1mStaged changes:\\033[0m\\n'; git diff --staged --stat; printf '\\n\\033[1mUnstaged changes:\\033[0m\\n'; git diff --stat";
       rem = "reminders";
+      hourly = "hourly-reminder";
       update = "sudo nixos-rebuild switch --flake .#${host}";
       fv = "vim \$(fzf)";
       cb = "xclip -sel clipboard";

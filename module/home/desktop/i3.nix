@@ -4,6 +4,26 @@ let
   mod = "Mod4";
   wallpaper = "/home/spacecat/Downloads/totoro.jpeg";
 
+  focusedTitle = pkgs.writeShellApplication {
+    name = "i3-focused-title";
+    runtimeInputs = with pkgs; [ i3 jq util-linux ];
+    text = ''
+      exec 9>"$XDG_RUNTIME_DIR/i3-focused-title.lock"
+      flock -n 9 || exit 0
+
+      update_titles() {
+        i3-msg '[all] title_format "%title"; [con_id=__focused__] title_format "<b>%title</b>"' >/dev/null
+      }
+
+      update_titles
+      i3-msg -m -t subscribe '["window", "workspace"]' | while IFS= read -r event; do
+        if jq -e '.success == true or .change == "focus" or .change == "new" or .change == "empty"' <<< "$event" >/dev/null; then
+          update_titles
+        fi
+      done
+    '';
+  };
+
   lockScreen = pkgs.writeShellApplication {
     name = "lock-screen";
     runtimeInputs = with pkgs; [
@@ -122,8 +142,8 @@ in
         background = "#222222";
         focused = {
           border = "#444444";
-          background = "#444444";
-          text = "#ffffff";
+          background = "#ffffff";
+          text = "#222222";
           indicator = "#ffffff";
           childBorder = "#444444";
         };
@@ -158,6 +178,11 @@ in
       };
 
       startup = [
+        {
+          command = "${focusedTitle}/bin/i3-focused-title";
+          always = true;
+          notification = false;
+        }
         {
           command = "${pkgs.feh}/bin/feh --bg-fill ${lib.escapeShellArg wallpaper}";
           always = true;

@@ -61,5 +61,6 @@
         (usage-meter :name "CTX" :value {codex.context})
         (usage-meter :name "5h" :value {codex.five_hour})
         (usage-meter :name "7d" :value {codex.seven_day})))
-    (status-item :tooltip "Local date and time"
+    (status-item :tooltip "Local date and time · click for Calcure"
+                 :onclick "@calendar@"
       (label :class "clock" :text date))))

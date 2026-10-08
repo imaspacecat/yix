@@ -1,0 +1,10 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "KiCad") (type "Table") (uri "${KICAD10_TEMPLATE_DIR}/sym-lib-table") (options "") (descr "KiCad Default Libraries"))
+  (lib (name "PCM_marbastlib-choc") (type "KiCad") (uri "@marbastlib@/symbols/marbastlib-choc.kicad_sym") (options "") (descr ""))
+  (lib (name "PCM_marbastlib-gateron_lp") (type "KiCad") (uri "@marbastlib@/symbols/marbastlib-gateron_lp.kicad_sym") (options "") (descr ""))
+  (lib (name "PCM_marbastlib-he") (type "KiCad") (uri "@marbastlib@/symbols/marbastlib-he.kicad_sym") (options "") (descr ""))
+  (lib (name "PCM_marbastlib-mx") (type "KiCad") (uri "@marbastlib@/symbols/marbastlib-mx.kicad_sym") (options "") (descr ""))
+  (lib (name "PCM_marbastlib-promicroish") (type "KiCad") (uri "@marbastlib@/symbols/marbastlib-promicroish.kicad_sym") (options "") (descr ""))
+  (lib (name "PCM_marbastlib-various") (type "KiCad") (uri "@marbastlib@/symbols/marbastlib-various.kicad_sym") (options "") (descr ""))
+)

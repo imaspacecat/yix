@@ -19,9 +19,22 @@ let
       exec python3 ${./script/reminders-cli} "$@"
     '';
   };
+
+  hourlyReminder = pkgs.writeShellApplication {
+    name = "hourly-reminder";
+    runtimeInputs = [ reminderCli ];
+    text = ''
+      if [[ $# -eq 0 || -z "$*" ]]; then
+        printf 'Usage: hourly reminder text\n' >&2
+        exit 1
+      fi
+      reminders add --every 1h -- "$*"
+      reminders check
+    '';
+  };
 in
 {
-  home.packages = [ reminderCli ];
+  home.packages = [ reminderCli hourlyReminder ];
 
   home.activation.createRemindersFile = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     reminder_dir="$HOME/.config/reminders"
