@@ -4,6 +4,13 @@ let
   mod = "Mod4";
   wallpaper = "/home/spacecat/Downloads/totoro.jpeg";
 
+  wallpaperWatcher = pkgs.writeShellApplication {
+    name = "i3-wallpaper";
+    runtimeInputs = with pkgs; [ i3 feh util-linux ];
+    runtimeEnv.WALLPAPER = wallpaper;
+    text = builtins.readFile ../../../scripts/i3-wallpaper;
+  };
+
   inactiveColors = {
     border = "#444444";
     background = "#222222";
@@ -99,7 +106,7 @@ in
           notification = false;
         }
         {
-          command = "${pkgs.feh}/bin/feh --bg-fill ${lib.escapeShellArg wallpaper}";
+          command = "${wallpaperWatcher}/bin/i3-wallpaper";
           always = true;
           notification = false;
         }
