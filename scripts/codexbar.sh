@@ -1,0 +1,22 @@
+session_dir="${CODEX_HOME:-$HOME/.codex}/sessions"
+if [ ! -d "$session_dir" ]; then
+  echo "CODEX --"
+  exit 0
+fi
+session_file=$(
+  find "$session_dir" -type f -name '*.jsonl' -printf '%T@ %p\n' 2>/dev/null \
+    | sort -nr \
+    | sed -n '1s/^[^ ]* //p'
+)
+if [ -z "$session_file" ]; then
+  echo "CODEX --"
+  exit 0
+fi
+tail -n 500 "$session_file" | jq -sr '
+  map(select(.type == "event_msg" and .payload.type == "token_count"))
+  | last | .payload
+  | if . == null then "CODEX --" else
+      (.info.model_context_window // 0) as $window
+      | (if $window > 0 then ((.info.last_token_usage.total_tokens // 0) * 100 / $window | floor) else 0 end) as $context
+      | "CTX \($context)% | 5h \((.rate_limits.primary.used_percent // 0) | round)% | 7d \((.rate_limits.secondary.used_percent // 0) | round)%"
+    end'

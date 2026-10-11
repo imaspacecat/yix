@@ -33,7 +33,7 @@
       ./home/desktop/i3.nix
       ./home/desktop/monitors.nix
       ./home/desktop/picom.nix
-      ./home/desktop/eww.nix
+      ./home/desktop/polybar.nix
       ./home/desktop/rofi.nix
 
       ./home/reminders.nix
