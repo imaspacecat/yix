@@ -1,14 +1,6 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
 
 let
-  reminderDefaults = pkgs.writeText "reminders.json" ''
-    {
-      "reminders": [
-
-      ]
-    }
-  '';
-
   reminderCli = pkgs.writeShellApplication {
     name = "reminders";
     runtimeInputs = with pkgs; [
@@ -28,11 +20,6 @@ let
 in
 {
   home.packages = [ reminderCli hourlyReminder ];
-
-  home.activation.createRemindersFile = lib.hm.dag.entryAfter [ "writeBoundary" ] (
-    "${pkgs.bash}/bin/bash ${../../scripts/create-reminders-file} "
-    + "${pkgs.coreutils}/bin ${reminderDefaults}"
-  );
 
   systemd.user.services.reminders = {
     Unit = {

@@ -1,8 +1,5 @@
 { pkgs, ... }:
 
-let
-  monitorLayout = pkgs.writeText "monitor-layout.py" (builtins.readFile ./monitor-layout.py);
-in
 {
   home.packages = [ pkgs.arandr ];
 
@@ -13,7 +10,7 @@ in
       After = [ "graphical-session-pre.target" ];
     };
     Service = {
-      ExecStart = "${pkgs.python3}/bin/python3 ${monitorLayout} ${pkgs.xrandr}/bin/xrandr";
+      ExecStart = "${pkgs.python3}/bin/python3 ${../../../scripts/monitor-layout} ${pkgs.xrandr}/bin/xrandr";
       Restart = "on-failure";
       RestartSec = 3;
     };

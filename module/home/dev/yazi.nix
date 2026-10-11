@@ -6,57 +6,11 @@ let
     ps.pygobject3
   ]);
 
-  yaziFileManager = pkgs.writeTextFile {
+  yaziFileManager = pkgs.writeShellApplication {
     name = "yazi-file-manager";
-    destination = "/bin/yazi-file-manager";
-    executable = true;
+    runtimeInputs = [ python ];
     text = ''
-      #!${python}/bin/python3
-      import subprocess
-      from urllib.parse import unquote, urlparse
-
-      import dbus
-      import dbus.service
-      from dbus.mainloop.glib import DBusGMainLoop
-      from gi.repository import GLib
-
-
-      def local_paths(uris):
-          paths = []
-          for uri in uris:
-              parsed = urlparse(uri)
-              if parsed.scheme == "file" and parsed.netloc in ("", "localhost"):
-                  paths.append(unquote(parsed.path))
-          return paths
-
-
-      class FileManager(dbus.service.Object):
-          def open(self, uris):
-              paths = local_paths(uris)
-              if paths:
-                  subprocess.Popen(
-                      ["${pkgs.rxvt-unicode}/bin/urxvt", "-name", "yazi", "-e", "${config.home.profileDirectory}/bin/yazi", *paths],
-                      start_new_session=True,
-                  )
-
-          @dbus.service.method("org.freedesktop.FileManager1", in_signature="ass")
-          def ShowItems(self, uris, startup_id):
-              self.open(uris)
-
-          @dbus.service.method("org.freedesktop.FileManager1", in_signature="ass")
-          def ShowFolders(self, uris, startup_id):
-              self.open(uris)
-
-          @dbus.service.method("org.freedesktop.FileManager1", in_signature="ass")
-          def ShowItemProperties(self, uris, startup_id):
-              self.open(uris)
-
-
-      DBusGMainLoop(set_as_default=True)
-      bus = dbus.SessionBus()
-      name = dbus.service.BusName("org.freedesktop.FileManager1", bus=bus)
-      manager = FileManager(bus, "/org/freedesktop/FileManager1")
-      GLib.MainLoop().run()
+      exec python3 ${../../../scripts/yazi-file-manager} ${pkgs.rxvt-unicode}/bin/urxvt ${config.home.profileDirectory}/bin/yazi
     '';
   };
 
