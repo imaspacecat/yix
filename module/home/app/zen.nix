@@ -81,6 +81,7 @@
       '';
 
       settings = {
+        "general.autoScroll" = true;
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         "ui.systemUsesDarkTheme" = 1;
         "browser.theme.toolbar-theme" = 0;

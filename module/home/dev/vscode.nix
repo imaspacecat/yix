@@ -10,6 +10,17 @@
     mutableExtensionsDir = false;
 
     profiles.default = {
+      keybindings = [
+        {
+          key = "alt+left";
+          command = "workbench.action.navigateBack";
+        }
+        {
+          key = "alt+right";
+          command = "workbench.action.navigateForward";
+        }
+      ];
+
       extensions =
         (with pkgs.vscode-extensions; [
           jnoortheen.nix-ide
