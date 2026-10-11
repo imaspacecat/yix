@@ -8,17 +8,7 @@ let
       maim
       xclip
     ];
-    text = ''
-      capture_args=(-s)
-      if [[ "''${1:-}" == "--full" ]]; then
-        capture_args=()
-        shift
-      fi
-      capture_file=$(mktemp --suffix=.png)
-      trap 'rm -f "$capture_file"' EXIT
-      maim "''${capture_args[@]}" "$@" "$capture_file"
-      xclip -selection clipboard -t image/png -i "$capture_file"
-    '';
+    text = builtins.readFile ../../../scripts/screenshot;
   };
 
   cpd-script = pkgs.writeShellApplication {
@@ -28,7 +18,7 @@ let
       findutils
       xclip
     ];
-    text = builtins.readFile ../script/cpd;
+    text = builtins.readFile ../../../scripts/cpd;
   };
 in
 {

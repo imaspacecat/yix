@@ -9,7 +9,7 @@ let
       gnused
       jq
     ];
-    text = builtins.readFile ../../../scripts/codexbar.sh;
+    text = builtins.readFile ../../../scripts/codexbar;
   };
 in
 

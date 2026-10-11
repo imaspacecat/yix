@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 session_dir="${CODEX_HOME:-$HOME/.codex}/sessions"
 if [ ! -d "$session_dir" ]; then
   echo "CODEX --"

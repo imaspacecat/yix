@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+exec 9>"$XDG_RUNTIME_DIR/i3-focused-title.lock"
+flock -n 9 || exit 0
+
+update_titles() {
+  i3-msg '[all] title_format "%title"; [con_id=__focused__] title_format "<b>%title</b>"' >/dev/null
+}
+
+update_titles
+i3-msg -m -t subscribe '["window", "workspace"]' | while IFS= read -r event; do
+  if jq -e '.success == true or .change == "focus" or .change == "new" or .change == "empty"' <<< "$event" >/dev/null; then
+    update_titles
+  fi
+done

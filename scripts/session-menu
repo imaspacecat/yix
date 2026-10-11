@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 theme='window { width: 320px; padding: 12px; } mainbox { spacing: 8px; } inputbar { padding: 4px; } listview { lines: 5; spacing: 2px; fixed-height: false; } element { padding: 6px; }'
 choice=$(printf '%s\n' '  Lock' '  Suspend' '  Logout' '  Restart' '  Power off' | rofi -dmenu -i -no-custom -p 'Session' -theme-str "$theme") || exit 0
 choice="${choice#*  }"

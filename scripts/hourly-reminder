@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+if [[ $# -eq 0 || -z "$*" ]]; then
+  printf 'Usage: hourly reminder text\n' >&2
+  exit 1
+fi
+reminders add --every 1h -- "$*"
+reminders check

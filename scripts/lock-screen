@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 image=$(mktemp --suffix=.png)
 trap 'rm -f "$image"' EXIT
 dimensions=$(xdpyinfo | awk '/dimensions:/ { print $2 }')

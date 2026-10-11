@@ -73,6 +73,5 @@ let
   };
 in
 {
-  programs.firefox.policies = browserPolicies;
   programs.zen-browser.policies = browserPolicies;
 }

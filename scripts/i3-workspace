@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+workspaces=$(i3-msg -t get_workspaces | jq -c '[.[] | select(.num != -1)] | sort_by(.num)')
+
+case "${1:-}" in
+  new)
+    target=$(jq -r '[.[].num] as $ws | first(range(1; 20) | select(. as $n | ($ws | contains([$n]) | not))) // empty' <<< "$workspaces")
+    ;;
+  next|previous)
+    target=$(jq -r --arg direction "$1" '
+      (.[] | select(.focused == true).num) as $current |
+      if $direction == "next" then
+        ([.[] | select(.num > $current).num] | first) // .[0].num
+      else
+        ([.[] | select(.num < $current).num] | last) // .[-1].num
+      end
+    ' <<< "$workspaces")
+    ;;
+  *)
+    printf 'Usage: i3-workspace {new|next|previous} [--move]\n' >&2
+    exit 1
+    ;;
+esac
+
+if [[ "${2:-}" == "--move" ]]; then
+  i3-msg "move container to workspace $target; workspace $target"
+else
+  i3-msg "workspace $target"
+fi

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+reminder_dir="$HOME/.config/reminders"
+reminder_file="$reminder_dir/reminders.json"
+
+if [ ! -e "$reminder_file" ]; then
+  "$1/mkdir" -p "$reminder_dir"
+  "$1/cp" "$2" "$reminder_file"
+fi

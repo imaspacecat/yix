@@ -16,35 +16,23 @@ let
       python3
     ];
     text = ''
-      exec python3 ${./script/reminders-cli} "$@"
+      exec python3 ${../../scripts/reminders-cli} "$@"
     '';
   };
 
   hourlyReminder = pkgs.writeShellApplication {
     name = "hourly-reminder";
     runtimeInputs = [ reminderCli ];
-    text = ''
-      if [[ $# -eq 0 || -z "$*" ]]; then
-        printf 'Usage: hourly reminder text\n' >&2
-        exit 1
-      fi
-      reminders add --every 1h -- "$*"
-      reminders check
-    '';
+    text = builtins.readFile ../../scripts/hourly-reminder;
   };
 in
 {
   home.packages = [ reminderCli hourlyReminder ];
 
-  home.activation.createRemindersFile = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    reminder_dir="$HOME/.config/reminders"
-    reminder_file="$reminder_dir/reminders.json"
-
-    if [ ! -e "$reminder_file" ]; then
-      ${pkgs.coreutils}/bin/mkdir -p "$reminder_dir"
-      ${pkgs.coreutils}/bin/cp ${reminderDefaults} "$reminder_file"
-    fi
-  '';
+  home.activation.createRemindersFile = lib.hm.dag.entryAfter [ "writeBoundary" ] (
+    "${pkgs.bash}/bin/bash ${../../scripts/create-reminders-file} "
+    + "${pkgs.coreutils}/bin ${reminderDefaults}"
+  );
 
   systemd.user.services.reminders = {
     Unit = {

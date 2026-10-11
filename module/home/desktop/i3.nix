@@ -7,21 +7,7 @@ let
   focusedTitle = pkgs.writeShellApplication {
     name = "i3-focused-title";
     runtimeInputs = with pkgs; [ i3 jq util-linux ];
-    text = ''
-      exec 9>"$XDG_RUNTIME_DIR/i3-focused-title.lock"
-      flock -n 9 || exit 0
-
-      update_titles() {
-        i3-msg '[all] title_format "%title"; [con_id=__focused__] title_format "<b>%title</b>"' >/dev/null
-      }
-
-      update_titles
-      i3-msg -m -t subscribe '["window", "workspace"]' | while IFS= read -r event; do
-        if jq -e '.success == true or .change == "focus" or .change == "new" or .change == "empty"' <<< "$event" >/dev/null; then
-          update_titles
-        fi
-      done
-    '';
+    text = builtins.readFile ../../../scripts/i3-focused-title;
   };
 
   lockScreen = pkgs.writeShellApplication {
@@ -34,7 +20,7 @@ let
       i3lock
     ];
     runtimeEnv.WALLPAPER = wallpaper;
-    text = builtins.readFile ../script/lock-screen;
+    text = builtins.readFile ../../../scripts/lock-screen;
   };
 
   sessionMenu = pkgs.writeShellApplication {
@@ -45,76 +31,15 @@ let
       systemd
       lockScreen
     ];
-    text = builtins.readFile ../script/session-menu;
+    text = builtins.readFile ../../../scripts/session-menu;
   };
 
-  nextFreeWs = pkgs.writeShellApplication {
-    name = "i3-next-free-workspace";
-    runtimeInputs = with pkgs; [
-      coreutils
-      i3
-      jq
-    ];
-    text = ''
-      i3-msg -t get_workspaces | jq '[.[] | select(.num != -1).num] as $ws | (range(1; 20) | select(. as $n | ($ws | contains([$n]) | not)))' | head -n1
-    '';
+  workspace = pkgs.writeShellApplication {
+    name = "i3-workspace";
+    runtimeInputs = with pkgs; [ i3 jq ];
+    text = builtins.readFile ../../../scripts/i3-workspace;
   };
 
-  moveNewWs = pkgs.writeShellApplication {
-    name = "i3-move-new-workspace";
-    runtimeInputs = [ pkgs.i3 ];
-    text = ''
-      ws=$(${nextFreeWs}/bin/i3-next-free-workspace)
-      i3-msg "move container to workspace $ws; workspace $ws"
-    '';
-  };
-
-  focusNewWs = pkgs.writeShellApplication {
-    name = "i3-focus-new-workspace";
-    runtimeInputs = [ pkgs.i3 ];
-    text = ''
-      ws=$(${nextFreeWs}/bin/i3-next-free-workspace)
-      i3-msg "workspace $ws"
-    '';
-  };
-
-  moveNextWs = pkgs.writeShellApplication {
-    name = "i3-move-next-workspace";
-    runtimeInputs = with pkgs; [
-      i3
-      jq
-    ];
-    text = ''
-      workspaces=$(i3-msg -t get_workspaces | jq -c '[.[] | select(.num != -1)] | sort_by(.num)')
-      current=$(echo "$workspaces" | jq '.[] | select(.focused == true).num')
-      next=$(echo "$workspaces" | jq --argjson cur "$current" '[.[] | select(.num > $cur).num] | first')
-
-      if [ "$next" = "null" ] || [ -z "$next" ]; then
-        next=$(echo "$workspaces" | jq '.[0].num')
-      fi
-
-      i3-msg "move container to workspace $next; workspace $next"
-    '';
-  };
-
-  movePrevWs = pkgs.writeShellApplication {
-    name = "i3-move-previous-workspace";
-    runtimeInputs = with pkgs; [
-      i3
-      jq
-    ];
-    text = ''
-      workspaces=$(i3-msg -t get_workspaces | jq -c '[.[] | select(.num != -1)] | sort_by(.num)')
-      current=$(echo "$workspaces" | jq '.[] | select(.focused == true).num')
-      prev=$(echo "$workspaces" | jq --argjson cur "$current" '[.[] | select(.num < $cur).num] | last')
-
-      if [ "$prev" = "null" ] || [ -z "$prev" ]; then
-        prev=$(echo "$workspaces" | jq '.[-1].num')
-      fi
-
-      i3-msg "move container to workspace $prev; workspace $prev"
-    '';
-  };
 in
 {
   xsession.windowManager.i3 = {
@@ -224,12 +149,12 @@ in
         "Ctrl+${mod}+Left" = "workspace prev";
         "Ctrl+${mod}+Right" = "workspace next";
 
-        "Ctrl+Shift+${mod}+Left" = "exec ${movePrevWs}/bin/i3-move-previous-workspace";
-        "Ctrl+Shift+${mod}+Right" = "exec ${moveNextWs}/bin/i3-move-next-workspace";
+        "Ctrl+Shift+${mod}+Left" = "exec ${workspace}/bin/i3-workspace previous --move";
+        "Ctrl+Shift+${mod}+Right" = "exec ${workspace}/bin/i3-workspace next --move";
 
-        "${mod}+Shift+plus" = "exec ${moveNewWs}/bin/i3-move-new-workspace";
+        "${mod}+Shift+plus" = "exec ${workspace}/bin/i3-workspace new --move";
 
-        "${mod}+plus" = "exec ${focusNewWs}/bin/i3-focus-new-workspace";
+        "${mod}+plus" = "exec ${workspace}/bin/i3-workspace new";
 
         "XF86MonBrightnessUp" = "exec brightnessctl set 5%+";
         "XF86MonBrightnessDown" = "exec brightnessctl set 5%-";
