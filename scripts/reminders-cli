@@ -14,20 +14,9 @@ reminder_file = pathlib.Path(
     os.environ.get("REMINDERS_FILE", pathlib.Path.home() / ".config/reminders/reminders.json")
 )
 weekdays = {
-    "mon": "mon",
-    "monday": "mon",
-    "tue": "tue",
-    "tuesday": "tue",
-    "wed": "wed",
-    "wednesday": "wed",
-    "thu": "thu",
-    "thursday": "thu",
-    "fri": "fri",
-    "friday": "fri",
-    "sat": "sat",
-    "saturday": "sat",
-    "sun": "sun",
-    "sunday": "sun",
+    alias: day[:3]
+    for day in ("monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday")
+    for alias in (day, day[:3])
 }
 
 
@@ -152,14 +141,10 @@ def recurring_schedule(args):
             "time": start.strftime("%H:%M"),
             "interval_minutes": parse_duration(args.every),
         }
-    if args.every == "day":
+    if args.every in {"day", "weekday"}:
         if not args.at or args.on:
-            raise SystemExit("reminders: --every day requires --at and does not use --on")
-        return {"frequency": "daily", "time": args.at}
-    if args.every == "weekday":
-        if not args.at or args.on:
-            raise SystemExit("reminders: --every weekday requires --at and does not use --on")
-        return {"frequency": "weekdays", "time": args.at}
+            raise SystemExit(f"reminders: --every {args.every} requires --at and does not use --on")
+        return {"frequency": "daily" if args.every == "day" else "weekdays", "time": args.at}
     if args.every == "week":
         if not args.at or not args.on or args.on.lower() not in weekdays:
             raise SystemExit("reminders: --every week requires --at and --on MON through SUN")

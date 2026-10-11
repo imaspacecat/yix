@@ -1,13 +1,6 @@
-{ ... }:
-
 {
   programs.obsidian = {
     enable = true;
-
-    vaults = {
-      "Personal" = {
-        target = "Documents/Obsidian/Personal";
-      };
-    };
+    vaults.Personal.target = "Documents/Obsidian/Personal";
   };
 }

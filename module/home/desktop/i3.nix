@@ -4,6 +4,14 @@ let
   mod = "Mod4";
   wallpaper = "/home/spacecat/Downloads/totoro.jpeg";
 
+  inactiveColors = {
+    border = "#444444";
+    background = "#222222";
+    text = "#ffffff";
+    indicator = "#222222";
+    childBorder = "#444444";
+  };
+
   focusedTitle = pkgs.writeShellApplication {
     name = "i3-focused-title";
     runtimeInputs = with pkgs; [ i3 jq util-linux ];
@@ -72,20 +80,8 @@ in
           indicator = "#ffffff";
           childBorder = "#444444";
         };
-        focusedInactive = {
-          border = "#444444";
-          background = "#222222";
-          text = "#ffffff";
-          indicator = "#222222";
-          childBorder = "#444444";
-        };
-        unfocused = {
-          border = "#444444";
-          background = "#222222";
-          text = "#ffffff";
-          indicator = "#222222";
-          childBorder = "#444444";
-        };
+        focusedInactive = inactiveColors;
+        unfocused = inactiveColors;
         urgent = {
           border = "#ffffff";
           background = "#444444";
@@ -93,13 +89,7 @@ in
           indicator = "#ffffff";
           childBorder = "#ffffff";
         };
-        placeholder = {
-          border = "#444444";
-          background = "#222222";
-          text = "#ffffff";
-          indicator = "#222222";
-          childBorder = "#444444";
-        };
+        placeholder = inactiveColors;
       };
 
       startup = [
