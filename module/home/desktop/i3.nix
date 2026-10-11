@@ -55,8 +55,18 @@ let
     text = builtins.readFile ../../../scripts/i3-workspace;
   };
 
+  findWindow = pkgs.writeShellApplication {
+    name = "find-window";
+    runtimeInputs = [ pkgs.rofi ];
+    text = ''
+      exec rofi -show window -show-icons
+    '';
+  };
+
 in
 {
+  home.packages = [ findWindow ];
+
   xsession.windowManager.i3 = {
     enable = true;
     config = {
@@ -121,6 +131,7 @@ in
         "${mod}+t" = "exec alacritty";
         "${mod}+c" = "exec urxvt -name yazi -e yazi";
         "${mod}+d" = "exec rofi -show drun";
+        "${mod}+Shift+f" = "exec ${findWindow}/bin/find-window";
         "${mod}+b" = "exec rofi-bluetooth";
         "${mod}+Escape" = "exec ${sessionMenu}/bin/session-menu";
         "${mod}+q" = "kill";
