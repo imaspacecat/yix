@@ -69,6 +69,7 @@
     vim
     wget
     curl
+    unzip
   ];
 
   services.envfs.enable = true;
