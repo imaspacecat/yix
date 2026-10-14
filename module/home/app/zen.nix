@@ -12,6 +12,14 @@
       id = 0;
       name = "spacecat";
       isDefault = true;
+      sine = {
+        enable = true;
+        mods = [
+          "context-menu-icons"
+          "advanced-tab-groups"
+          "ZenFolderTreeConnectors"
+        ];
+      };
 
       userChrome = ''
         :root {
@@ -72,6 +80,15 @@
 
         .tabbrowser-tab:is([selected], [visuallyselected]) .tab-label {
           color: #ffffff !important;
+        }
+
+        .tree-connector {
+          color: #ffffff !important;
+        }
+
+        .tree-connector .connector-visible {
+          stroke: #ffffff !important;
+          opacity: 1 !important;
         }
 
         #urlbar-background {
