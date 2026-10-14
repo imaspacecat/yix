@@ -4,6 +4,8 @@ let
   mod = "Mod4";
   wallpaper = "/home/spacecat/Downloads/totoro.jpeg";
 
+  skippy = pkgs.skippy-xd;
+
   wallpaperWatcher = pkgs.writeShellApplication {
     name = "i3-wallpaper";
     runtimeInputs = with pkgs; [ i3 feh util-linux ];
@@ -65,7 +67,16 @@ let
 
 in
 {
-  home.packages = [ findWindow ];
+  home.packages = [ findWindow skippy ];
+
+  xdg.configFile."skippy-xd/skippy-xd.rc".text = ''
+    [system]
+    clientList = XQueryTree
+    pseudoTrans = false
+
+    [label]
+    font = JetBrainsMono Nerd Font-10
+  '';
 
   xsession.windowManager.i3 = {
     enable = true;
@@ -111,6 +122,10 @@ in
 
       startup = [
         {
+          command = "${skippy}/bin/skippy-xd --start-daemon";
+          notification = false;
+        }
+        {
           command = "${focusedTitle}/bin/i3-focused-title";
           always = true;
           notification = false;
@@ -131,6 +146,8 @@ in
         "${mod}+t" = "exec alacritty";
         "${mod}+c" = "exec urxvt -name yazi -e yazi";
         "${mod}+d" = "exec rofi -show drun";
+        "${mod}+Shift+d" = "exec ${skippy}/bin/skippy-xd --expose --desktop -1";
+        "${mod}+Shift+w" = "exec ${skippy}/bin/skippy-xd --paging";
         "${mod}+Shift+f" = "exec ${findWindow}/bin/find-window";
         "${mod}+b" = "exec rofi-bluetooth";
         "${mod}+Escape" = "exec ${sessionMenu}/bin/session-menu";
@@ -177,6 +194,7 @@ in
     };
 
     extraConfig = ''
+      client.focused_tab_title #444444 #c4c4c4 #222222
       for_window [class="discord"] move scratchpad; scratchpad show
       for_window [class="URxvt" instance="yazi"] floating enable
     '';
