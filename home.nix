@@ -18,6 +18,11 @@
     gimp
     discord-ptb
     usbutils
+    (writeShellApplication {
+      name = "ambient-microphone";
+      runtimeInputs = [ pulseaudio ffmpeg-headless pipewire systemd ];
+      text = builtins.readFile ./scripts/ambient-microphone;
+    })
   ];
 
   programs.btop = {

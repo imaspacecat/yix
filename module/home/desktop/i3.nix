@@ -34,6 +34,8 @@ let
       imagemagick
       xdpyinfo
       gawk
+      i3
+      jq
       i3lock
     ];
     runtimeEnv.WALLPAPER = wallpaper;

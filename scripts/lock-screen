@@ -2,7 +2,12 @@
 image=$(mktemp --suffix=.png)
 trap 'rm -f "$image"' EXIT
 dimensions=$(xdpyinfo | awk '/dimensions:/ { print $2 }')
-if magick "$WALLPAPER" -resize "$dimensions" -background black -gravity center -extent "$dimensions" "$image"; then
+args=(-size "$dimensions" xc:black)
+while read -r width height x y; do
+  args+=(\( "$WALLPAPER" -resize "${width}x${height}^" -gravity center -extent "${width}x${height}" +repage \)
+    -gravity northwest -geometry "+${x}+${y}" -composite)
+done < <(i3-msg -t get_outputs | jq -r '.[] | select(.active) | .rect | "\(.width) \(.height) \(.x) \(.y)"')
+if magick "${args[@]}" "$image"; then
   i3lock --color=000000 --image="$image"
 else
   i3lock --color=000000

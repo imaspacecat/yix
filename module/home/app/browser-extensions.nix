@@ -5,6 +5,8 @@ let
     "https://zoom.us"
     "https://*.zoom.us"
     "https://gov.teams.microsoft.us"
+    "https://www.meritfirst.us"
+    "https://meritfirst.us"
   ];
 in
 {
@@ -59,6 +61,8 @@ in
         "https://meet.google.com"
         "https://zoom.us"
         "https://*.zoom.us"
+        "https://www.meritfirst.us"
+        "https://meritfirst.us"
       ];
     };
   };

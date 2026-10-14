@@ -1,0 +1,25 @@
+case "${1:-start}" in
+  start)
+    systemd-run --user --collect --unit=ambient-microphone --setenv="PATH=$PATH" bash "$0" run
+    ;;
+  stop)
+    systemctl --user stop ambient-microphone.service
+    ;;
+  run)
+    sink=$(pactl load-module module-null-sink sink_name=ambient_noise_sink sink_properties=device.description=Ambient_Noise_Sink)
+    source=""
+    cleanup() {
+      if [ -n "$source" ]; then pactl unload-module "$source" || true; fi
+      pactl unload-module "$sink" || true
+    }
+    trap cleanup EXIT
+    trap 'exit 0' TERM INT
+    source=$(pactl load-module module-remap-source master=ambient_noise_sink.monitor source_name=ambient_noise_mic source_properties=device.description=Ambient_Noise_Microphone)
+    ffmpeg -nostdin -hide_banner -loglevel error -re -f lavfi -i 'anoisesrc=color=pink:amplitude=0.3:sample_rate=48000' -f f32le -ac 2 - |
+      pw-cat --playback --raw --format f32 --rate 48000 --channels 2 --target ambient_noise_sink -
+    ;;
+  *)
+    echo "Usage: ambient-microphone [start|stop]" >&2
+    exit 1
+    ;;
+esac
