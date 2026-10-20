@@ -7,6 +7,9 @@ let
     "https://gov.teams.microsoft.us"
     "https://www.meritfirst.us"
     "https://meritfirst.us"
+    "https://www.loom.com"
+    "https://codesignal.com"
+    "https://*.codesignal.com"
   ];
 in
 {
@@ -58,6 +61,8 @@ in
       Camera.Allow = meetingSites;
       Microphone.Allow = meetingSites;
       ScreenShare.Allow = [
+        "https://codesignal.com"
+        "https://*.codesignal.com"
         "https://meet.google.com"
         "https://zoom.us"
         "https://*.zoom.us"

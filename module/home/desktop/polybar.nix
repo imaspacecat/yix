@@ -30,7 +30,7 @@ in
     config = {
       "settings" = {
         "screenchange-reload" = true;
-        format-background = "#E6222222";
+        format-background = "#CC222222";
         format-padding = 1;
       };
 
@@ -47,7 +47,7 @@ in
 
       "module/tray" = {
         type = "internal/tray";
-        tray-background = "#E6222222";
+        tray-background = "#CC222222";
         tray-size = "16px";
         tray-spacing = "6px";
       };
@@ -55,10 +55,10 @@ in
       "module/i3" = {
         type = "internal/i3";
         format = "<label-state>";
+        format-background = "#CC222222";
         index-sort = true;
         format-padding = 0;
         label-focused = "%index%";
-        label-focused-background = "#444444";
         label-focused-underline = "#ffffff";
         label-focused-padding = "12px";
         label-unfocused = "%index%";
