@@ -6,5 +6,5 @@
     powerOnBoot = true;
   };
 
-  environment.systemPackages = [ pkgs.rofi-bluetooth ];
+  environment.systemPackages = [ pkgs.bluetui ];
 }

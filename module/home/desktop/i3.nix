@@ -151,7 +151,7 @@ in
         "${mod}+Shift+d" = "exec ${skippy}/bin/skippy-xd --expose --desktop -1";
         "${mod}+Shift+w" = "exec ${skippy}/bin/skippy-xd --paging";
         "${mod}+Shift+f" = "exec ${findWindow}/bin/find-window";
-        "${mod}+b" = "exec rofi-bluetooth";
+        "${mod}+b" = "exec ${pkgs.rxvt-unicode}/bin/urxvt -name bluetooth -title Bluetooth -geometry 90x26 -e ${pkgs.bluetui}/bin/bluetui";
         "${mod}+Escape" = "exec ${sessionMenu}/bin/session-menu";
         "${mod}+q" = "kill";
 
@@ -199,6 +199,7 @@ in
       client.focused_tab_title #444444 #c4c4c4 #222222
       for_window [class="discord"] move scratchpad; scratchpad show
       for_window [class="URxvt" instance="yazi"] floating enable
+      for_window [class="URxvt" instance="bluetooth"] floating enable, move position center
     '';
   };
 }
