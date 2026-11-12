@@ -61,6 +61,7 @@
   ];
 
   fonts.packages = with pkgs; [
+    (google-fonts.override { fonts = [ "Creepster" ]; })
     jetbrains-mono
     nerd-fonts.jetbrains-mono
   ];

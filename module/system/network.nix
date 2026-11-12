@@ -6,7 +6,9 @@
     "1.0.0.1"
   ];
 
-  networking.networkmanager.dns = "none";
+  networking.networkmanager.dns = "systemd-resolved";
+
+  services.resolved.enable = true;
 
   networking.networkmanager.ensureProfiles = {
     environmentFiles = [ config.sops.secrets."networks".path ];

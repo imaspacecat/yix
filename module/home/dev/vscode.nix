@@ -68,6 +68,16 @@
             version = "0.2.0";
             sha256 = "sha256-5AS5BkFf6Lqv3h1KE3OYrPt6sZajqs6P//W6OFywTn4=";
           }
+        ]
+        ++ [
+          (pkgs.vscode-utils.buildVscodeExtension {
+            pname = "nbdiff-local-nbdiff-text";
+            version = "0.1.1";
+            src = ./extensions/nbdiff-text-0.1.1.vsix;
+            vscodeExtPublisher = "nbdiff-local";
+            vscodeExtName = "nbdiff-text";
+            vscodeExtUniqueId = "nbdiff-local.nbdiff-text";
+          })
         ];
 
       userSettings = {

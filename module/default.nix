@@ -12,6 +12,7 @@
     ./system/sops.nix
     ./system/user.nix
     ./system/udev.nix
+    ./system/vpn.nix
   ];
 
   home-manager.users.spacecat = {
@@ -24,6 +25,7 @@
       ./home/app/helium.nix
       ./home/app/kicad/kicad.nix
       ./home/app/obsidian.nix
+      ./home/app/prusa.nix
       ./home/app/urxvt.nix
       ./home/app/zen.nix
       #./home/app/quartus.nix
