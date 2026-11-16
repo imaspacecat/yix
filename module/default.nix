@@ -1,7 +1,8 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   programs.ssh.startAgent = true;
+  programs.steam.enable = true;
 
   imports = [
     ./system/audio.nix
@@ -16,6 +17,8 @@
   ];
 
   home-manager.users.spacecat = {
+    home.packages = [ pkgs.prusa-slicer ];
+
     imports = [
       ../home.nix
 
@@ -24,8 +27,8 @@
       ./home/app/calcure.nix
       ./home/app/helium.nix
       ./home/app/kicad/kicad.nix
+      ./home/app/limusic.nix
       ./home/app/obsidian.nix
-      ./home/app/prusa.nix
       ./home/app/urxvt.nix
       ./home/app/zen.nix
       #./home/app/quartus.nix

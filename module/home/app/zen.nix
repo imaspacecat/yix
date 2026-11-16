@@ -95,6 +95,30 @@
           background: #111111 !important;
           border-color: #282828 !important;
         }
+
+        #ContentSelectDropdown > menupopup {
+          color-scheme: dark !important;
+          --panel-color: #f2f2f2 !important;
+          --panel-text-color: #f2f2f2 !important;
+          --content-select-background-image: none !important;
+          background: #111111 !important;
+          color: #f2f2f2 !important;
+        }
+
+        #ContentSelectDropdown :is(menuitem, menucaption) {
+          background: #111111 !important;
+          color: #f2f2f2 !important;
+          text-shadow: none !important;
+        }
+
+        #ContentSelectDropdown menuitem[_moz-menuactive="true"] {
+          background: #8ab4f8 !important;
+          color: #000000 !important;
+        }
+
+        #ContentSelectDropdown :is(menuitem, menucaption)[disabled="true"] {
+          color: #999999 !important;
+        }
       '';
 
       settings = {
