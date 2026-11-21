@@ -16,7 +16,9 @@
     file
     feh
     gimp
+    vlc
     discord-ptb
+    tixati
     usbutils
     (writeShellApplication {
       name = "ambient-microphone";
